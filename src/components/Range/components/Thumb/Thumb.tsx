@@ -1,5 +1,5 @@
 import { forwardRef } from "react";
-import { Bullet } from "../Bullet";
+import { Bullet } from "../Bullet/Bullet";
 import styles from "./Thumb.module.css";
 import { useRangeThumb } from "./useRangeThumb";
 
@@ -8,7 +8,7 @@ interface ThumbProps {
 	children?: React.ReactNode;
 }
 
-export const Thumb = forwardRef<HTMLDivElement, ThumbProps>(
+const Thumb = forwardRef<HTMLDivElement, ThumbProps>(
 	({ type, children }, ref) => {
 		const {
 			value,
@@ -72,3 +72,5 @@ export const Thumb = forwardRef<HTMLDivElement, ThumbProps>(
 );
 
 Thumb.displayName = "Thumb";
+
+export { Thumb };

@@ -6,10 +6,12 @@ interface BulletProps {
 	visible: boolean;
 }
 
-export function Bullet({ value, currency, visible }: BulletProps) {
+const Bullet = ({ value, currency, visible }: BulletProps) => {
 	if (!visible) return null;
 
 	const displayValue = currency ? `${currency}${value.toFixed(2)}` : value;
 
 	return <div className={styles.bullet}>{displayValue}</div>;
-}
+};
+
+export { Bullet };

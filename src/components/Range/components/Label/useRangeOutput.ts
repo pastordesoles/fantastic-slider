@@ -7,7 +7,7 @@ interface UseRangeOutputProps {
 	type: OutputType;
 }
 
-export function useRangeOutput({ type }: UseRangeOutputProps) {
+const useRangeOutput = ({ type }: UseRangeOutputProps) => {
 	const context = useRangeContext();
 	const [isEditing, setIsEditing] = useState(false);
 	const [tempValue, setTempValue] = useState("");
@@ -104,4 +104,6 @@ export function useRangeOutput({ type }: UseRangeOutputProps) {
 		applyValue,
 		handleKeyDown,
 	};
-}
+};
+
+export { useRangeOutput };

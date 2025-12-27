@@ -4,15 +4,15 @@ import type {
 	FixedRangeProps,
 	RangeProps as NormalRangeProps,
 } from "@/types/range";
-import { Label } from "./components/Label";
-import { Thumb } from "./components/Thumb";
-import { Track } from "./components/Track";
+import { Label } from "./components/Label/Label";
+import { Thumb } from "./components/Thumb/Thumb";
+import { Track } from "./components/Track/Track";
 import { RangeProvider, useRangeContext } from "./context/RangeContext";
 import styles from "./Range.module.css";
 
 type RangeProps = NormalRangeProps | FixedRangeProps;
 
-function RangeContent() {
+const RangeContent = () => {
 	const context = useRangeContext();
 	const isFixed = context.mode === "fixed";
 
@@ -46,12 +46,14 @@ function RangeContent() {
 			</div>
 		</div>
 	);
-}
+};
 
-export default function Range(props: RangeProps) {
+const Range = (props: RangeProps) => {
 	return (
 		<RangeProvider config={props}>
 			<RangeContent />
 		</RangeProvider>
 	);
-}
+};
+
+export { Range };

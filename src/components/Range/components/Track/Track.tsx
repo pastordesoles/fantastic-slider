@@ -6,36 +6,36 @@ interface TrackProps {
 	children: ReactNode;
 }
 
-export const Track = forwardRef<HTMLDivElement, TrackProps>(
-	({ children }, ref) => {
-		const { trackClass, activeClass, minPercentage, maxPercentage, trackRef } =
-			useRangeTrack();
+const Track = forwardRef<HTMLDivElement, TrackProps>(({ children }, ref) => {
+	const { trackClass, activeClass, minPercentage, maxPercentage, trackRef } =
+		useRangeTrack();
 
-		const finalRef = ref || trackRef;
+	const finalRef = ref || trackRef;
 
-		const activeClassNames = activeClass
-			.split(" ")
-			.map((cls) => styles[cls])
-			.join(" ");
+	const activeClassNames = activeClass
+		.split(" ")
+		.map((cls) => styles[cls])
+		.join(" ");
 
-		return (
+	return (
+		<div
+			ref={finalRef}
+			className={styles[trackClass]}
+			data-testid="range-track"
+		>
 			<div
-				ref={finalRef}
-				className={styles[trackClass]}
-				data-testid="range-track"
-			>
-				<div
-					className={activeClassNames}
-					data-testid="range-track-highlighted"
-					style={{
-						left: `${minPercentage}%`,
-						width: `${maxPercentage - minPercentage}%`,
-					}}
-				/>
-				{children}
-			</div>
-		);
-	},
-);
+				className={activeClassNames}
+				data-testid="range-track-highlighted"
+				style={{
+					left: `${minPercentage}%`,
+					width: `${maxPercentage - minPercentage}%`,
+				}}
+			/>
+			{children}
+		</div>
+	);
+});
 
 Track.displayName = "Track";
+
+export { Track };

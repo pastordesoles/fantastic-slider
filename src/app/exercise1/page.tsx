@@ -1,13 +1,13 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Range from "@/components/Range";
+import { Range } from "@/components/Range";
 import { BackButton } from "@/components/shared";
 import { getRangeConfig } from "@/services/rangeService";
 import type { RangeConfig } from "@/types/range";
 import styles from "./page.module.css";
 
-export default function Exercise1Page() {
+const Exercise1Page = () => {
 	const [config, setConfig] = useState<RangeConfig | null>(null);
 
 	useEffect(() => {
@@ -30,4 +30,6 @@ export default function Exercise1Page() {
 			/>
 		</main>
 	);
-}
+};
+
+export default Exercise1Page;

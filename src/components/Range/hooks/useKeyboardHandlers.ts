@@ -8,7 +8,7 @@ import type { useRangeState } from "./useRangeState";
 type RangeState = ReturnType<typeof useRangeState>;
 type RangeProps = NormalRangeProps | FixedRangeProps;
 
-export function useKeyboardHandlers(state: RangeState, props: RangeProps) {
+const useKeyboardHandlers = (state: RangeState, props: RangeProps) => {
 	const step = "step" in props ? (props.step ?? 1) : 1;
 	const min = "min" in props ? props.min : 0;
 	const max = "max" in props ? props.max : 100;
@@ -166,4 +166,6 @@ export function useKeyboardHandlers(state: RangeState, props: RangeProps) {
 		handleMinKeyDown,
 		handleMaxKeyDown,
 	};
-}
+};
+
+export { useKeyboardHandlers };

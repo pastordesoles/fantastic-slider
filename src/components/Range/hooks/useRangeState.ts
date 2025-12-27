@@ -6,11 +6,11 @@ import type {
 
 type RangeProps = NormalRangeProps | FixedRangeProps;
 
-function isFixedRange(props: RangeProps): props is FixedRangeProps {
+const isFixedRange = (props: RangeProps): props is FixedRangeProps => {
 	return "values" in props;
-}
+};
 
-export function useRangeState(props: RangeProps) {
+const useRangeState = (props: RangeProps) => {
 	const isNormalMode = !isFixedRange(props);
 
 	const normalMin = isNormalMode ? props.min : 0;
@@ -163,4 +163,6 @@ export function useRangeState(props: RangeProps) {
 		getPercentage: getIndexPercentage,
 		getIndexFromPosition,
 	};
-}
+};
+
+export { useRangeState };

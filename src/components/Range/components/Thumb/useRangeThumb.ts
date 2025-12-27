@@ -8,7 +8,7 @@ interface UseRangeThumbProps {
 	thumbRef: React.RefObject<HTMLDivElement>;
 }
 
-export function useRangeThumb({ type, thumbRef }: UseRangeThumbProps) {
+const useRangeThumb = ({ type, thumbRef }: UseRangeThumbProps) => {
 	const context = useRangeContext();
 	const [showBullet, setShowBullet] = useState(false);
 
@@ -85,4 +85,6 @@ export function useRangeThumb({ type, thumbRef }: UseRangeThumbProps) {
 		activeClass,
 		separatedClass,
 	};
-}
+};
+
+export { useRangeThumb };

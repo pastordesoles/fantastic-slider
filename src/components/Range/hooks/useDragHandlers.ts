@@ -3,10 +3,10 @@ import type { useRangeState } from "./useRangeState";
 
 type RangeState = ReturnType<typeof useRangeState>;
 
-export function useDragHandlers(
+const useDragHandlers = (
 	state: RangeState,
 	trackRef: React.RefObject<HTMLDivElement | null>,
-) {
+) => {
 	const [activeThumb, setActiveThumb] = useState<"min" | "max" | null>(null);
 
 	const handleMove = useCallback(
@@ -72,4 +72,6 @@ export function useDragHandlers(
 		activeThumb,
 		setActiveThumb,
 	};
-}
+};
+
+export { useDragHandlers };

@@ -1,6 +1,6 @@
 import { useRangeContext } from "../../context/RangeContext";
 
-export function useRangeTrack() {
+const useRangeTrack = () => {
 	const context = useRangeContext();
 
 	const isFixedMode = context.mode === "fixed";
@@ -22,4 +22,6 @@ export function useRangeTrack() {
 		maxPercentage,
 		trackRef,
 	};
-}
+};
+
+export { useRangeTrack };

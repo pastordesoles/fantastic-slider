@@ -18,18 +18,20 @@ interface RangeProviderProps {
 	config: RangeProps;
 }
 
-export function RangeProvider({ children, config }: RangeProviderProps) {
+const RangeProvider = ({ children, config }: RangeProviderProps) => {
 	const range = useRange(config);
 
 	return (
 		<RangeContext.Provider value={range}>{children}</RangeContext.Provider>
 	);
-}
+};
 
-export function useRangeContext() {
+const useRangeContext = () => {
 	const context = useContext(RangeContext);
 	if (!context) {
 		throw new Error("useRangeContext must be used within a RangeProvider");
 	}
 	return context;
-}
+};
+
+export { RangeProvider, useRangeContext };

@@ -9,11 +9,11 @@ import { useRangeState } from "./useRangeState";
 
 type RangeProps = NormalRangeProps | FixedRangeProps;
 
-function isFixedRange(props: RangeProps): props is FixedRangeProps {
+const isFixedRange = (props: RangeProps): props is FixedRangeProps => {
 	return "values" in props;
-}
+};
 
-export function useRange(props: RangeProps) {
+const useRange = (props: RangeProps) => {
 	const trackRef = useRef<HTMLDivElement>(null);
 	const minThumbRef = useRef<HTMLDivElement>(null);
 	const maxThumbRef = useRef<HTMLDivElement>(null);
@@ -59,4 +59,6 @@ export function useRange(props: RangeProps) {
 		updateMinValue: rangeState.updateMinValue,
 		updateMaxValue: rangeState.updateMaxValue,
 	};
-}
+};
+
+export { useRange };

@@ -5,7 +5,7 @@ interface LabelProps {
 	type: "min" | "max";
 }
 
-export function Label({ type }: LabelProps) {
+const Label = ({ type }: LabelProps) => {
 	const {
 		displayValue,
 		label,
@@ -51,4 +51,6 @@ export function Label({ type }: LabelProps) {
 			{displayValue}
 		</button>
 	);
-}
+};
+
+export { Label };
