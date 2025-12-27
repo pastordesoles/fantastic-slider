@@ -47,7 +47,7 @@ const useLabel = ({ type }: UseLabelProps) => {
 	const displayValue = currency ? `${currency}${value.toFixed(2)}` : value;
 
 	const className = currency
-		? "fixed-range__value-label"
+		? "range__value-label range__value-label--fixed"
 		: "range__value-label";
 
 	const handleClick = () => {

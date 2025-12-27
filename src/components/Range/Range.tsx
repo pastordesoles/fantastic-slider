@@ -20,29 +20,15 @@ const RangeContent = () => {
 	const isFixed = context.mode === "fixed";
 
 	return (
-		<fieldset className={clsx(isFixed ? styles["fixed-range"] : styles.range)}>
-			<legend
-				className={clsx(
-					isFixed ? styles["fixed-range__label"] : styles.range__label,
-				)}
-			>
-				{context.label}
-			</legend>
+		<fieldset className={clsx(styles.range, isFixed && styles["range--fixed"])}>
+			<legend className={styles.range__label}>{context.label}</legend>
 
-			<div
-				className={clsx(
-					isFixed ? styles["fixed-range__values"] : styles.range__values,
-				)}
-			>
+			<div className={styles.range__values}>
 				<Label type="min" />
 				<Label type="max" />
 			</div>
 
-			<div
-				className={clsx(
-					isFixed ? styles["fixed-range__slider"] : styles.range__slider,
-				)}
-			>
+			<div className={styles.range__slider}>
 				<Track>
 					<Thumb ref={context.minThumbRef} type="min" />
 					<Thumb ref={context.maxThumbRef} type="max" />

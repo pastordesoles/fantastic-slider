@@ -1,3 +1,5 @@
+import clsx from "clsx";
+
 import styles from "./Label.module.css";
 import { useLabel } from "./useLabel";
 
@@ -21,8 +23,10 @@ const Label = ({ type }: LabelProps) => {
 		handleKeyDown,
 	} = useLabel({ type });
 
+	const classNames = className.split(" ").map((cls) => styles[cls]);
+
 	if (!isEditable) {
-		return <div className={styles[className]}>{displayValue}</div>;
+		return <div className={clsx(classNames)}>{displayValue}</div>;
 	}
 
 	if (isEditing) {
@@ -44,7 +48,7 @@ const Label = ({ type }: LabelProps) => {
 	return (
 		<button
 			type="button"
-			className={styles[className]}
+			className={clsx(classNames)}
 			onClick={handleClick}
 			aria-label={`${label}: ${displayValue}. Click to edit.`}
 		>
