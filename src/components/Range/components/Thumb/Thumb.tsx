@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import { forwardRef } from "react";
 import { Bullet } from "../Bullet/Bullet";
 import styles from "./Thumb.module.css";
@@ -13,7 +14,6 @@ const Thumb = forwardRef<HTMLDivElement, ThumbProps>(
 		const {
 			value,
 			position,
-			label,
 			isActive,
 			isSeparated,
 			showBullet,
@@ -34,27 +34,22 @@ const Thumb = forwardRef<HTMLDivElement, ThumbProps>(
 			thumbRef: ref as React.RefObject<HTMLDivElement>,
 		});
 
-		const classNames = [
-			styles[baseClass],
-			isActive && styles[activeClass],
-			isActive && "active",
-			isSeparated && styles[separatedClass],
-		]
-			.filter(Boolean)
-			.join(" ");
-
 		return (
 			<div
 				ref={ref}
 				role="slider"
-				aria-label={label}
 				aria-labelledby={ariaLabelledBy}
 				aria-valuemin={ariaValueMin}
 				aria-valuemax={ariaValueMax}
 				aria-valuenow={ariaValueNow}
 				aria-valuetext={ariaValueText}
 				tabIndex={0}
-				className={classNames}
+				className={clsx(
+					styles[baseClass],
+					isActive && styles[activeClass],
+					isActive && "active",
+					isSeparated && styles[separatedClass],
+				)}
 				data-position={position}
 				onMouseDown={handleInteractionStart}
 				onTouchStart={handleInteractionStart}

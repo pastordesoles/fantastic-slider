@@ -1,5 +1,6 @@
 "use client";
 
+import clsx from "clsx";
 import type {
 	FixedRangeProps,
 	RangeProps as NormalRangeProps,
@@ -17,34 +18,35 @@ const RangeContent = () => {
 	const isFixed = context.mode === "fixed";
 
 	return (
-		<div className={isFixed ? styles["fixed-range"] : styles.range}>
-			<div
-				className={isFixed ? styles["fixed-range__label"] : styles.range__label}
-				id={isFixed ? "fixed-range-label" : "range-label"}
+		<fieldset className={clsx(isFixed ? styles["fixed-range"] : styles.range)}>
+			<legend
+				className={clsx(
+					isFixed ? styles["fixed-range__label"] : styles.range__label,
+				)}
 			>
 				{context.label}
-			</div>
+			</legend>
 
 			<div
-				className={
-					isFixed ? styles["fixed-range__values"] : styles.range__values
-				}
+				className={clsx(
+					isFixed ? styles["fixed-range__values"] : styles.range__values,
+				)}
 			>
 				<Label type="min" />
 				<Label type="max" />
 			</div>
 
 			<div
-				className={
-					isFixed ? styles["fixed-range__slider"] : styles.range__slider
-				}
+				className={clsx(
+					isFixed ? styles["fixed-range__slider"] : styles.range__slider,
+				)}
 			>
 				<Track>
 					<Thumb ref={context.minThumbRef} type="min" />
 					<Thumb ref={context.maxThumbRef} type="max" />
 				</Track>
 			</div>
-		</div>
+		</fieldset>
 	);
 };
 

@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import { forwardRef, type ReactNode } from "react";
 import styles from "./Track.module.css";
 import { useRangeTrack } from "./useRangeTrack";
@@ -12,19 +13,14 @@ const Track = forwardRef<HTMLDivElement, TrackProps>(({ children }, ref) => {
 
 	const finalRef = ref || trackRef;
 
-	const activeClassNames = activeClass
-		.split(" ")
-		.map((cls) => styles[cls])
-		.join(" ");
-
 	return (
 		<div
 			ref={finalRef}
-			className={styles[trackClass]}
+			className={clsx(styles[trackClass])}
 			data-testid="range-track"
 		>
 			<div
-				className={activeClassNames}
+				className={clsx(activeClass.split(" ").map((cls) => styles[cls]))}
 				data-testid="range-track-highlighted"
 				style={{
 					left: `${minPercentage}%`,

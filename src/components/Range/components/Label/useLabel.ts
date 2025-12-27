@@ -1,13 +1,13 @@
 import { useState } from "react";
 import { useRangeContext } from "../../context/RangeContext";
 
-type OutputType = "min" | "max";
+type LabelType = "min" | "max";
 
-interface UseRangeOutputProps {
-	type: OutputType;
+interface UseLabelProps {
+	type: LabelType;
 }
 
-const useRangeOutput = ({ type }: UseRangeOutputProps) => {
+const useLabel = ({ type }: UseLabelProps) => {
 	const context = useRangeContext();
 	const [isEditing, setIsEditing] = useState(false);
 	const [tempValue, setTempValue] = useState("");
@@ -106,4 +106,4 @@ const useRangeOutput = ({ type }: UseRangeOutputProps) => {
 	};
 };
 
-export { useRangeOutput };
+export { useLabel };

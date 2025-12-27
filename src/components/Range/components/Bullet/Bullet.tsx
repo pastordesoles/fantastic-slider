@@ -11,7 +11,11 @@ const Bullet = ({ value, currency, visible }: BulletProps) => {
 
 	const displayValue = currency ? `${currency}${value.toFixed(2)}` : value;
 
-	return <div className={styles.bullet}>{displayValue}</div>;
+	return (
+		<div className={styles.bullet} role="tooltip" aria-live="polite">
+			{displayValue}
+		</div>
+	);
 };
 
 export { Bullet };

@@ -1,5 +1,5 @@
 import styles from "./Label.module.css";
-import { useRangeOutput } from "./useRangeOutput";
+import { useLabel } from "./useLabel";
 
 interface LabelProps {
 	type: "min" | "max";
@@ -19,7 +19,7 @@ const Label = ({ type }: LabelProps) => {
 		handleChange,
 		applyValue,
 		handleKeyDown,
-	} = useRangeOutput({ type });
+	} = useLabel({ type });
 
 	if (!isEditable) {
 		return <div className={styles[className]}>{displayValue}</div>;
