@@ -22,7 +22,7 @@ const Label = ({ type }: LabelProps) => {
 	} = useLabel({ type });
 
 	if (!isEditable) {
-		return <div className={styles[className]}>{displayValue}</div>;
+		return <div className={className}>{displayValue}</div>;
 	}
 
 	if (isEditing) {
@@ -44,7 +44,7 @@ const Label = ({ type }: LabelProps) => {
 	return (
 		<button
 			type="button"
-			className={styles[className]}
+			className={className}
 			onClick={handleClick}
 			aria-label={`${label}: ${displayValue}. Click to edit.`}
 		>

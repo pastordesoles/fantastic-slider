@@ -12,58 +12,47 @@ const isFixedRange = (props: RangeProps): props is FixedRangeProps => {
 };
 
 const useRangeState = (props: RangeProps) => {
-	const isNormalMode = !isFixedRange(props);
+	const isFixed = isFixedRange(props);
 
-	const normalMin = isNormalMode ? props.min : 0;
-	const normalMax = isNormalMode ? props.max : 100;
-	const normalStep = isNormalMode ? (props.step ?? 1) : 1;
-	const normalInitialMin = isNormalMode
-		? (props.initialMinValue ?? props.min)
-		: 0;
-	const normalInitialMax = isNormalMode
-		? (props.initialMaxValue ?? props.max)
-		: 100;
+	const normalState = useNormalRangeState(
+		isFixed ? { min: 0, max: 100 } : props,
+	);
+	const fixedState = useFixedRangeState(isFixed ? props : { values: [] });
 
-	const fixedValues = isFixedRange(props) ? props.values : [];
-	const fixedInitialMinIndex = isFixedRange(props)
-		? (props.initialMinIndex ?? 0)
-		: 0;
-	const fixedInitialMaxIndex = isFixedRange(props)
-		? (props.initialMaxIndex ?? props.values.length - 1)
-		: 0;
+	return isFixed ? fixedState : normalState;
+};
 
-	const [minValue, setMinValue] = useState(normalInitialMin);
-	const [maxValue, setMaxValue] = useState(normalInitialMax);
-	const [minIndex, setMinIndex] = useState(fixedInitialMinIndex);
-	const [maxIndex, setMaxIndex] = useState(fixedInitialMaxIndex);
+const useNormalRangeState = (props: NormalRangeProps) => {
+	const min = props.min;
+	const max = props.max;
+	const step = props.step ?? 1;
+
+	const [minValue, setMinValue] = useState(props.initialMinValue ?? props.min);
+	const [maxValue, setMaxValue] = useState(props.initialMaxValue ?? props.max);
 
 	const updateMinValue = useCallback(
 		(value: number) => {
-			const clampedValue = Math.max(normalMin, Math.min(value, maxValue));
+			const clampedValue = Math.max(min, Math.min(value, maxValue));
 			setMinValue(clampedValue);
-			if (isNormalMode) {
-				props.onChange?.({ minValue: clampedValue, maxValue });
-			}
+			props.onChange?.({ minValue: clampedValue, maxValue });
 		},
-		[normalMin, maxValue, isNormalMode, props],
+		[min, maxValue, props],
 	);
 
 	const updateMaxValue = useCallback(
 		(value: number) => {
-			const clampedValue = Math.min(normalMax, Math.max(value, minValue));
+			const clampedValue = Math.min(max, Math.max(value, minValue));
 			setMaxValue(clampedValue);
-			if (isNormalMode) {
-				props.onChange?.({ minValue, maxValue: clampedValue });
-			}
+			props.onChange?.({ minValue, maxValue: clampedValue });
 		},
-		[normalMax, minValue, isNormalMode, props],
+		[max, minValue, props],
 	);
 
 	const getValuePercentage = useCallback(
 		(value: number) => {
-			return ((value - normalMin) / (normalMax - normalMin)) * 100;
+			return ((value - min) / (max - min)) * 100;
 		},
-		[normalMin, normalMax],
+		[min, max],
 	);
 
 	const getValueFromPosition = useCallback(
@@ -73,54 +62,70 @@ const useRangeState = (props: RangeProps) => {
 				0,
 				Math.min(100, ((clientX - rect.left) / rect.width) * 100),
 			);
-			const value = normalMin + (percentage / 100) * (normalMax - normalMin);
-			const step = normalStep;
+			const value = min + (percentage / 100) * (max - min);
 			return Math.round(value / step) * step;
 		},
-		[normalMin, normalMax, normalStep],
+		[min, max, step],
+	);
+
+	return {
+		mode: "normal" as const,
+		minValue,
+		maxValue,
+		minPercentage: getValuePercentage(minValue),
+		maxPercentage: getValuePercentage(maxValue),
+		updateMinValue,
+		updateMaxValue,
+		getPercentage: getValuePercentage,
+		getValueFromPosition,
+	};
+};
+
+const useFixedRangeState = (props: FixedRangeProps) => {
+	const values = props.values;
+
+	const [minIndex, setMinIndex] = useState(props.initialMinIndex ?? 0);
+	const [maxIndex, setMaxIndex] = useState(
+		props.initialMaxIndex ?? props.values.length - 1,
 	);
 
 	const updateMinIndex = useCallback(
 		(index: number) => {
 			const clampedIndex = Math.max(0, Math.min(index, maxIndex));
 			setMinIndex(clampedIndex);
-			if (isFixedRange(props)) {
-				props.onChange?.({
-					minValue: fixedValues[clampedIndex],
-					maxValue: fixedValues[maxIndex],
-					minIndex: clampedIndex,
-					maxIndex,
-				});
-			}
+			props.onChange?.({
+				minValue: values[clampedIndex],
+				maxValue: values[maxIndex],
+				minIndex: clampedIndex,
+				maxIndex,
+			});
 		},
-		[maxIndex, fixedValues, props],
+		[maxIndex, values, props],
 	);
 
 	const updateMaxIndex = useCallback(
 		(index: number) => {
 			const clampedIndex = Math.min(
-				fixedValues.length - 1,
+				values.length - 1,
 				Math.max(index, minIndex),
 			);
 			setMaxIndex(clampedIndex);
-			if (isFixedRange(props)) {
-				props.onChange?.({
-					minValue: fixedValues[minIndex],
-					maxValue: fixedValues[clampedIndex],
-					minIndex,
-					maxIndex: clampedIndex,
-				});
-			}
+			props.onChange?.({
+				minValue: values[minIndex],
+				maxValue: values[clampedIndex],
+				minIndex,
+				maxIndex: clampedIndex,
+			});
 		},
-		[minIndex, fixedValues, props],
+		[minIndex, values, props],
 	);
 
 	const getIndexPercentage = useCallback(
 		(index: number) => {
-			if (fixedValues.length <= 1) return 0;
-			return (index / (fixedValues.length - 1)) * 100;
+			if (values.length <= 1) return 0;
+			return (index / (values.length - 1)) * 100;
 		},
-		[fixedValues.length],
+		[values.length],
 	);
 
 	const getIndexFromPosition = useCallback(
@@ -130,33 +135,18 @@ const useRangeState = (props: RangeProps) => {
 				0,
 				Math.min(100, ((clientX - rect.left) / rect.width) * 100),
 			);
-
-			const exactIndex = (percentage / 100) * (fixedValues.length - 1);
+			const exactIndex = (percentage / 100) * (values.length - 1);
 			return Math.round(exactIndex);
 		},
-		[fixedValues.length],
+		[values.length],
 	);
-
-	if (isNormalMode) {
-		return {
-			mode: "normal" as const,
-			minValue,
-			maxValue,
-			minPercentage: getValuePercentage(minValue),
-			maxPercentage: getValuePercentage(maxValue),
-			updateMinValue,
-			updateMaxValue,
-			getPercentage: getValuePercentage,
-			getValueFromPosition,
-		};
-	}
 
 	return {
 		mode: "fixed" as const,
 		minIndex,
 		maxIndex,
-		minValue: fixedValues[minIndex],
-		maxValue: fixedValues[maxIndex],
+		minValue: values[minIndex],
+		maxValue: values[maxIndex],
 		minPercentage: getIndexPercentage(minIndex),
 		maxPercentage: getIndexPercentage(maxIndex),
 		updateMinIndex,

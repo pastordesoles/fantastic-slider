@@ -51,13 +51,9 @@ const useRangeThumb = ({ type, thumbRef }: UseRangeThumbProps) => {
 		ariaLabelledBy = "range-label";
 	}
 
-	const baseClass = isFixedMode ? "fixed-range__thumb" : "range__thumb";
-	const activeClass = isFixedMode
-		? "fixed-range__thumb--active"
-		: "range__thumb--active";
-	const separatedClass = isFixedMode
-		? "fixed-range__thumb--separated"
-		: "range__thumb--separated";
+	const baseClass = "range__thumb";
+	const activeClass = "range__thumb--active";
+	const separatedClass = "range__thumb--separated";
 
 	useEffect(() => {
 		if (thumbRef.current) {

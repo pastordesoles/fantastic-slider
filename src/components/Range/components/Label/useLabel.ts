@@ -1,6 +1,9 @@
 import { useState } from "react";
 
+import clsx from "clsx";
+
 import { useRangeContext } from "../../context/RangeContext";
+import styles from "./Label.module.css";
 
 type LabelType = "min" | "max";
 
@@ -46,9 +49,10 @@ const useLabel = ({ type }: UseLabelProps) => {
 
 	const displayValue = currency ? `${currency}${value.toFixed(2)}` : value;
 
-	const className = currency
-		? "fixed-range__value-label"
-		: "range__value-label";
+	const className = clsx(
+		styles["range__value-label"],
+		currency && styles["range__value-label--fixed"],
+	);
 
 	const handleClick = () => {
 		if (!isEditable) return;
