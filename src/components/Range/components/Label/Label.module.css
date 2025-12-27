@@ -36,7 +36,6 @@
 	outline-offset: 2px;
 }
 
-/* Remove spinner from number inputs */
 .range__value-input::-webkit-inner-spin-button,
 .range__value-input::-webkit-outer-spin-button {
 	-webkit-appearance: none;

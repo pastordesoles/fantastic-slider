@@ -22,7 +22,6 @@ const useRangeState = (props: RangeProps) => {
 	return isFixed ? fixedState : normalState;
 };
 
-// Normal Range State
 const useNormalRangeState = (props: NormalRangeProps) => {
 	const min = props.min;
 	const max = props.max;
@@ -82,7 +81,6 @@ const useNormalRangeState = (props: NormalRangeProps) => {
 	};
 };
 
-// Fixed Range State
 const useFixedRangeState = (props: FixedRangeProps) => {
 	const values = props.values;
 
