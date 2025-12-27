@@ -16,6 +16,7 @@ const Thumb = forwardRef<HTMLDivElement, ThumbProps>(
 		const {
 			value,
 			position,
+			label,
 			isActive,
 			isSeparated,
 			showBullet,
@@ -40,6 +41,7 @@ const Thumb = forwardRef<HTMLDivElement, ThumbProps>(
 			<div
 				ref={ref}
 				role="slider"
+				aria-label={label}
 				aria-labelledby={ariaLabelledBy}
 				aria-valuemin={ariaValueMin}
 				aria-valuemax={ariaValueMax}
