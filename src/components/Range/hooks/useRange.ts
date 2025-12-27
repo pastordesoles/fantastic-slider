@@ -1,8 +1,10 @@
 import { useRef } from "react";
+
 import type {
 	FixedRangeProps,
 	RangeProps as NormalRangeProps,
 } from "@/types/range";
+
 import { useDragHandlers } from "./useDragHandlers";
 import { useKeyboardHandlers } from "./useKeyboardHandlers";
 import { useRangeState } from "./useRangeState";

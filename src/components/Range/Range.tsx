@@ -1,10 +1,12 @@
 "use client";
 
 import clsx from "clsx";
+
 import type {
 	FixedRangeProps,
 	RangeProps as NormalRangeProps,
 } from "@/types/range";
+
 import { Label } from "./components/Label/Label";
 import { Thumb } from "./components/Thumb/Thumb";
 import { Track } from "./components/Track/Track";

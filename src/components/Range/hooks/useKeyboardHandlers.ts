@@ -1,8 +1,10 @@
 import { useCallback } from "react";
+
 import type {
 	FixedRangeProps,
 	RangeProps as NormalRangeProps,
 } from "@/types/range";
+
 import type { useRangeState } from "./useRangeState";
 
 type RangeState = ReturnType<typeof useRangeState>;

@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+
 import { useRangeContext } from "../../context/RangeContext";
 
 type ThumbType = "min" | "max";

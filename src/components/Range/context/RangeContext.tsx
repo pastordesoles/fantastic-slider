@@ -1,10 +1,12 @@
 "use client";
 
 import { createContext, type ReactNode, useContext } from "react";
+
 import type {
 	FixedRangeProps,
 	RangeProps as NormalRangeProps,
 } from "@/types/range";
+
 import { useRange } from "../hooks/useRange";
 
 type RangeProps = NormalRangeProps | FixedRangeProps;

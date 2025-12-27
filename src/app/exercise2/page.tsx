@@ -1,10 +1,12 @@
 "use client";
 
 import { useEffect, useState } from "react";
+
 import { Range } from "@/components/Range";
 import { BackButton } from "@/components/shared";
 import { getFixedRangeConfig } from "@/services/fixedRangeService";
 import type { FixedRangeConfig } from "@/types/range";
+
 import styles from "./page.module.css";
 
 const Exercise2Page = () => {

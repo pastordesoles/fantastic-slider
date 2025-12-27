@@ -1,4 +1,5 @@
 import { useState } from "react";
+
 import { useRangeContext } from "../../context/RangeContext";
 
 type LabelType = "min" | "max";
