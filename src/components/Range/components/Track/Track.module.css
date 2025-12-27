@@ -7,7 +7,8 @@
 	cursor: pointer;
 }
 
-.range__track-active {
+.range__track-active,
+.range__track-highlighted {
 	position: absolute;
 	height: 100%;
 	background-color: #3b82f6;
@@ -24,7 +25,8 @@
 	cursor: pointer;
 }
 
-.fixed-range__track-active {
+.fixed-range__track-active,
+.fixed-range__track-highlighted {
 	position: absolute;
 	height: 100%;
 	background-color: #10b981;

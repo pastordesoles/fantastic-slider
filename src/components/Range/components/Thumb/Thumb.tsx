@@ -1,56 +1,47 @@
 import { forwardRef } from "react";
+import { Bullet } from "../Bullet";
 import styles from "./Thumb.module.css";
+import { useRangeThumb } from "./useRangeThumb";
 
 interface ThumbProps {
-	value: number;
-	position: number;
-	label: string;
-	isActive: boolean;
-	onMouseDown: () => void;
-	onTouchStart: () => void;
-	onKeyDown: (e: React.KeyboardEvent) => void;
-	min?: number;
-	max?: number;
-	index?: number;
-	valuesLength?: number;
-	currency?: string;
+	type: "min" | "max";
+	children?: React.ReactNode;
 }
 
 export const Thumb = forwardRef<HTMLDivElement, ThumbProps>(
-	(
-		{
+	({ type, children }, ref) => {
+		const {
 			value,
 			position,
 			label,
 			isActive,
-			onMouseDown,
-			onTouchStart,
-			onKeyDown,
-			min,
-			max,
-			index,
-			valuesLength,
+			isSeparated,
+			showBullet,
 			currency,
-		},
-		ref,
-	) => {
-		const isFixedMode = index !== undefined && valuesLength !== undefined;
+			handleInteractionStart,
+			handleKeyDown,
+			setShowBullet,
+			ariaValueMin,
+			ariaValueMax,
+			ariaValueNow,
+			ariaValueText,
+			ariaLabelledBy,
+			baseClass,
+			activeClass,
+			separatedClass,
+		} = useRangeThumb({
+			type,
+			thumbRef: ref as React.RefObject<HTMLDivElement>,
+		});
 
-		const ariaValueMin = isFixedMode ? 0 : min;
-		const ariaValueMax = isFixedMode ? valuesLength - 1 : max;
-		const ariaValueNow = isFixedMode ? index : value;
-		const ariaValueText = isFixedMode
-			? `${label}: ${currency}${value.toFixed(2)}`
-			: `${label}: ${value}`;
-		const ariaLabelledBy = isFixedMode ? "fixed-range-label" : "range-label";
-
-		const baseClass = isFixedMode
-			? styles["fixed-range__thumb"]
-			: styles.range__thumb;
-		const activeClass = isFixedMode
-			? styles["fixed-range__thumb--active"]
-			: styles["range__thumb--active"];
-		const className = `${baseClass} ${isActive ? activeClass : ""}`;
+		const classNames = [
+			styles[baseClass],
+			isActive && styles[activeClass],
+			isActive && "active",
+			isSeparated && styles[separatedClass],
+		]
+			.filter(Boolean)
+			.join(" ");
 
 		return (
 			<div
@@ -63,12 +54,19 @@ export const Thumb = forwardRef<HTMLDivElement, ThumbProps>(
 				aria-valuenow={ariaValueNow}
 				aria-valuetext={ariaValueText}
 				tabIndex={0}
-				className={className}
-				style={{ left: `${position}%` }}
-				onMouseDown={onMouseDown}
-				onTouchStart={onTouchStart}
-				onKeyDown={onKeyDown}
-			/>
+				className={classNames}
+				data-position={position}
+				onMouseDown={handleInteractionStart}
+				onTouchStart={handleInteractionStart}
+				onFocus={handleInteractionStart}
+				onKeyDown={handleKeyDown}
+				onMouseEnter={() => setShowBullet(true)}
+				onMouseLeave={() => setShowBullet(false)}
+			>
+				{children || (
+					<Bullet value={value} currency={currency} visible={showBullet} />
+				)}
+			</div>
 		);
 	},
 );

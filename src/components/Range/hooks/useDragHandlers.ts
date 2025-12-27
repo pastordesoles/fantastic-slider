@@ -1,66 +1,35 @@
 import { useCallback, useEffect, useState } from "react";
+import type { useRangeState } from "./useRangeState";
 
-// Normal mode props
-interface NormalDragHandlersProps {
-	mode: "normal";
-	trackRef: React.RefObject<HTMLDivElement | null>;
-	getValueFromPosition: (trackElement: HTMLElement, clientX: number) => number;
-	minValue: number;
-	maxValue: number;
-	updateMinValue: (value: number) => void;
-	updateMaxValue: (value: number) => void;
-}
+type RangeState = ReturnType<typeof useRangeState>;
 
-// Fixed mode props
-interface FixedDragHandlersProps {
-	mode: "fixed";
-	trackRef: React.RefObject<HTMLDivElement | null>;
-	getIndexFromPosition: (trackElement: HTMLElement, clientX: number) => number;
-	minIndex: number;
-	maxIndex: number;
-	updateMinIndex: (index: number) => void;
-	updateMaxIndex: (index: number) => void;
-}
-
-type UseDragHandlersProps = NormalDragHandlersProps | FixedDragHandlersProps;
-
-/**
- * Unified hook for handling drag interactions on range sliders
- *
- * Supports both normal mode (continuous values) and fixed mode (discrete indices)
- */
-export function useDragHandlers(props: UseDragHandlersProps) {
+export function useDragHandlers(
+	state: RangeState,
+	trackRef: React.RefObject<HTMLDivElement | null>,
+) {
 	const [activeThumb, setActiveThumb] = useState<"min" | "max" | null>(null);
 
 	const handleMove = useCallback(
 		(clientX: number) => {
-			if (!activeThumb || !props.trackRef.current) return;
+			if (!activeThumb || !trackRef.current) return;
 
-			if (props.mode === "normal") {
-				const newValue = props.getValueFromPosition(
-					props.trackRef.current,
-					clientX,
-				);
-
+			if (state.mode === "normal") {
+				const newValue = state.getValueFromPosition(trackRef.current, clientX);
 				if (activeThumb === "min") {
-					props.updateMinValue(newValue);
+					state.updateMinValue(newValue);
 				} else {
-					props.updateMaxValue(newValue);
+					state.updateMaxValue(newValue);
 				}
 			} else {
-				const newIndex = props.getIndexFromPosition(
-					props.trackRef.current,
-					clientX,
-				);
-
+				const newIndex = state.getIndexFromPosition(trackRef.current, clientX);
 				if (activeThumb === "min") {
-					props.updateMinIndex(newIndex);
+					state.updateMinIndex(newIndex);
 				} else {
-					props.updateMaxIndex(newIndex);
+					state.updateMaxIndex(newIndex);
 				}
 			}
 		},
-		[activeThumb, props],
+		[activeThumb, state, trackRef],
 	);
 
 	const handleMouseMove = useCallback(

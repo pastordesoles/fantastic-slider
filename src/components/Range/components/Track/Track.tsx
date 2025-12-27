@@ -1,26 +1,32 @@
 import { forwardRef, type ReactNode } from "react";
 import styles from "./Track.module.css";
+import { useRangeTrack } from "./useRangeTrack";
 
 interface TrackProps {
-	minPercentage: number;
-	maxPercentage: number;
 	children: ReactNode;
-	mode: "normal" | "fixed";
 }
 
 export const Track = forwardRef<HTMLDivElement, TrackProps>(
-	({ minPercentage, maxPercentage, children, mode }, ref) => {
-		const trackClass =
-			mode === "fixed" ? styles["fixed-range__track"] : styles.range__track;
-		const activeClass =
-			mode === "fixed"
-				? styles["fixed-range__track-active"]
-				: styles["range__track-active"];
+	({ children }, ref) => {
+		const { trackClass, activeClass, minPercentage, maxPercentage, trackRef } =
+			useRangeTrack();
+
+		const finalRef = ref || trackRef;
+
+		const activeClassNames = activeClass
+			.split(" ")
+			.map((cls) => styles[cls])
+			.join(" ");
 
 		return (
-			<div ref={ref} className={trackClass}>
+			<div
+				ref={finalRef}
+				className={styles[trackClass]}
+				data-testid="range-track"
+			>
 				<div
-					className={activeClass}
+					className={activeClassNames}
+					data-testid="range-track-highlighted"
 					style={{
 						left: `${minPercentage}%`,
 						width: `${maxPercentage - minPercentage}%`,

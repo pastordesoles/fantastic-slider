@@ -1,66 +1,29 @@
-import { useState } from "react";
 import styles from "./Label.module.css";
+import { useRangeOutput } from "./useRangeOutput";
 
 interface LabelProps {
-	value: number;
-	label: string;
-	editable?: boolean;
-	min?: number;
-	max?: number;
-	onValueChange?: (value: number) => void;
-	currency?: string;
+	type: "min" | "max";
 }
 
-export function Label({
-	value,
-	label,
-	editable = false,
-	min,
-	max,
-	onValueChange,
-	currency,
-}: LabelProps) {
-	const [isEditing, setIsEditing] = useState(false);
-	const [tempValue, setTempValue] = useState(String(value));
+export function Label({ type }: LabelProps) {
+	const {
+		displayValue,
+		label,
+		isEditable,
+		isEditing,
+		tempValue,
+		className,
+		min,
+		max,
+		handleClick,
+		handleChange,
+		applyValue,
+		handleKeyDown,
+	} = useRangeOutput({ type });
 
-	if (!editable) {
-		const displayValue = currency ? `${currency}${value.toFixed(2)}` : value;
-		const className = currency
-			? styles["fixed-range__value-label"]
-			: styles["range__value-label"];
-
-		return <div className={className}>{displayValue}</div>;
+	if (!isEditable) {
+		return <div className={styles[className]}>{displayValue}</div>;
 	}
-
-	const handleClick = () => {
-		setIsEditing(true);
-		setTempValue(String(value));
-	};
-
-	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		setTempValue(e.target.value);
-	};
-
-	const applyValue = () => {
-		const numValue = Number.parseInt(tempValue, 10);
-		if (!Number.isNaN(numValue) && min !== undefined && max !== undefined) {
-			const clampedValue = Math.max(min, Math.min(numValue, max));
-			onValueChange?.(clampedValue);
-			setTempValue(String(clampedValue));
-		} else {
-			setTempValue(String(value));
-		}
-		setIsEditing(false);
-	};
-
-	const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-		if (e.key === "Enter") {
-			applyValue();
-		} else if (e.key === "Escape") {
-			setTempValue(String(value));
-			setIsEditing(false);
-		}
-	};
 
 	if (isEditing) {
 		return (
@@ -81,11 +44,11 @@ export function Label({
 	return (
 		<button
 			type="button"
-			className={styles["range__value-label"]}
+			className={styles[className]}
 			onClick={handleClick}
-			aria-label={`${label}: ${value}. Click to edit.`}
+			aria-label={`${label}: ${displayValue}. Click to edit.`}
 		>
-			{value}
+			{displayValue}
 		</button>
 	);
 }

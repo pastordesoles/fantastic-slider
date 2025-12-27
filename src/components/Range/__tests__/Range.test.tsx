@@ -1,4 +1,4 @@
-import { render, screen, waitFor } from "@testing-library/react";
+import { act, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import Range from "../Range";
 
@@ -63,7 +63,9 @@ describe("Range Component", () => {
 			render(<Range {...defaultProps} initialMinValue={50} />);
 
 			const minSlider = screen.getAllByRole("slider")[0];
-			minSlider.focus();
+			act(() => {
+				minSlider.focus();
+			});
 
 			await user.keyboard("{ArrowRight}");
 
@@ -77,7 +79,9 @@ describe("Range Component", () => {
 			render(<Range {...defaultProps} initialMinValue={50} />);
 
 			const minSlider = screen.getAllByRole("slider")[0];
-			minSlider.focus();
+			act(() => {
+				minSlider.focus();
+			});
 
 			await user.keyboard("{ArrowUp}");
 
@@ -91,7 +95,9 @@ describe("Range Component", () => {
 			render(<Range {...defaultProps} initialMinValue={50} />);
 
 			const minSlider = screen.getAllByRole("slider")[0];
-			minSlider.focus();
+			act(() => {
+				minSlider.focus();
+			});
 
 			await user.keyboard("{ArrowLeft}");
 
@@ -105,7 +111,9 @@ describe("Range Component", () => {
 			render(<Range {...defaultProps} initialMinValue={50} />);
 
 			const minSlider = screen.getAllByRole("slider")[0];
-			minSlider.focus();
+			act(() => {
+				minSlider.focus();
+			});
 
 			await user.keyboard("{ArrowDown}");
 
@@ -119,7 +127,9 @@ describe("Range Component", () => {
 			render(<Range {...defaultProps} initialMinValue={50} />);
 
 			const minSlider = screen.getAllByRole("slider")[0];
-			minSlider.focus();
+			act(() => {
+				minSlider.focus();
+			});
 
 			await user.keyboard("{Home}");
 
@@ -135,7 +145,9 @@ describe("Range Component", () => {
 			);
 
 			const minSlider = screen.getAllByRole("slider")[0];
-			minSlider.focus();
+			act(() => {
+				minSlider.focus();
+			});
 
 			await user.keyboard("{End}");
 
@@ -149,7 +161,9 @@ describe("Range Component", () => {
 			render(<Range {...defaultProps} initialMinValue={50} />);
 
 			const minSlider = screen.getAllByRole("slider")[0];
-			minSlider.focus();
+			act(() => {
+				minSlider.focus();
+			});
 
 			await user.keyboard("{PageUp}");
 
@@ -163,7 +177,9 @@ describe("Range Component", () => {
 			render(<Range {...defaultProps} initialMinValue={50} />);
 
 			const minSlider = screen.getAllByRole("slider")[0];
-			minSlider.focus();
+			act(() => {
+				minSlider.focus();
+			});
 
 			await user.keyboard("{PageDown}");
 
@@ -179,7 +195,9 @@ describe("Range Component", () => {
 			render(<Range {...defaultProps} initialMaxValue={50} />);
 
 			const maxSlider = screen.getAllByRole("slider")[1];
-			maxSlider.focus();
+			act(() => {
+				maxSlider.focus();
+			});
 
 			await user.keyboard("{ArrowRight}");
 
@@ -193,7 +211,9 @@ describe("Range Component", () => {
 			render(<Range {...defaultProps} initialMaxValue={50} />);
 
 			const maxSlider = screen.getAllByRole("slider")[1];
-			maxSlider.focus();
+			act(() => {
+				maxSlider.focus();
+			});
 
 			await user.keyboard("{ArrowLeft}");
 
@@ -207,7 +227,9 @@ describe("Range Component", () => {
 			render(<Range {...defaultProps} initialMaxValue={50} />);
 
 			const maxSlider = screen.getAllByRole("slider")[1];
-			maxSlider.focus();
+			act(() => {
+				maxSlider.focus();
+			});
 
 			await user.keyboard("{End}");
 
@@ -223,7 +245,9 @@ describe("Range Component", () => {
 			);
 
 			const maxSlider = screen.getAllByRole("slider")[1];
-			maxSlider.focus();
+			act(() => {
+				maxSlider.focus();
+			});
 
 			await user.keyboard("{Home}");
 
@@ -241,7 +265,9 @@ describe("Range Component", () => {
 			);
 
 			const minSlider = screen.getAllByRole("slider")[0];
-			minSlider.focus();
+			act(() => {
+				minSlider.focus();
+			});
 
 			await user.keyboard("{ArrowRight>10}");
 
@@ -261,7 +287,9 @@ describe("Range Component", () => {
 			);
 
 			const maxSlider = screen.getAllByRole("slider")[1];
-			maxSlider.focus();
+			act(() => {
+				maxSlider.focus();
+			});
 
 			await user.keyboard("{ArrowLeft>10}");
 
@@ -279,7 +307,9 @@ describe("Range Component", () => {
 			render(<Range {...defaultProps} initialMinValue={0} />);
 
 			const minSlider = screen.getAllByRole("slider")[0];
-			minSlider.focus();
+			act(() => {
+				minSlider.focus();
+			});
 
 			await user.keyboard("{ArrowLeft}");
 
@@ -293,7 +323,9 @@ describe("Range Component", () => {
 			render(<Range {...defaultProps} initialMaxValue={100} />);
 
 			const maxSlider = screen.getAllByRole("slider")[1];
-			maxSlider.focus();
+			act(() => {
+				maxSlider.focus();
+			});
 
 			await user.keyboard("{ArrowRight}");
 
@@ -443,7 +475,9 @@ describe("Range Component", () => {
 			);
 
 			const minSlider = screen.getAllByRole("slider")[0];
-			minSlider.focus();
+			act(() => {
+				minSlider.focus();
+			});
 
 			await user.keyboard("{ArrowRight}");
 
@@ -490,7 +524,9 @@ describe("Range Component", () => {
 			render(<Range {...defaultProps} step={5} initialMinValue={50} />);
 
 			const minSlider = screen.getAllByRole("slider")[0];
-			minSlider.focus();
+			act(() => {
+				minSlider.focus();
+			});
 
 			await user.keyboard("{ArrowRight}");
 
