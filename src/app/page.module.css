@@ -1,141 +1,131 @@
-.page {
-  --background: #fafafa;
-  --foreground: #fff;
-
-  --text-primary: #000;
-  --text-secondary: #666;
-
-  --button-primary-hover: #383838;
-  --button-secondary-hover: #f2f2f2;
-  --button-secondary-border: #ebebeb;
-
-  display: flex;
-  min-height: 100vh;
-  align-items: center;
-  justify-content: center;
-  font-family: var(--font-geist-sans);
-  background-color: var(--background);
+.home {
+	min-height: 100vh;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	gap: 2rem;
+	background-color: #f9fafb;
+	padding: 2rem;
 }
 
-.main {
-  display: flex;
-  min-height: 100vh;
-  width: 100%;
-  max-width: 800px;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: space-between;
-  background-color: var(--foreground);
-  padding: 120px 60px;
+.home__button {
+	display: inline-block;
+	padding: 1rem 2rem;
+	font-size: 1.125rem;
+	font-weight: 600;
+	color: #fff;
+	background-color: #3b82f6;
+	border-radius: 0.5rem;
+	text-decoration: none;
+	transition: all 0.2s ease;
+	box-shadow: 0 4px 6px rgba(59, 130, 246, 0.2);
 }
 
-.intro {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  text-align: left;
-  gap: 24px;
+.home__button:hover {
+	background-color: #2563eb;
+	transform: translateY(-2px);
+	box-shadow: 0 6px 12px rgba(59, 130, 246, 0.3);
 }
 
-.intro h1 {
-  max-width: 320px;
-  font-size: 40px;
-  font-weight: 600;
-  line-height: 48px;
-  letter-spacing: -2.4px;
-  text-wrap: balance;
-  color: var(--text-primary);
+.container {
+	min-height: 100vh;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background-color: #f9fafb;
+	padding: 2rem;
 }
 
-.intro p {
-  max-width: 440px;
-  font-size: 18px;
-  line-height: 32px;
-  text-wrap: balance;
-  color: var(--text-secondary);
+.card {
+	background-color: #fff;
+	border-radius: 0.5rem;
+	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+	padding: 3rem;
+	max-width: 800px;
+	width: 100%;
 }
 
-.intro a {
-  font-weight: 500;
-  color: var(--text-primary);
+.title {
+	font-size: 2.5rem;
+	font-weight: bold;
+	color: #1f2937;
+	margin-bottom: 0.5rem;
+	text-align: center;
 }
 
-.ctas {
-  display: flex;
-  flex-direction: row;
-  width: 100%;
-  max-width: 440px;
-  gap: 16px;
-  font-size: 14px;
+.description {
+	font-size: 1.125rem;
+	color: #6b7280;
+	margin-bottom: 3rem;
+	text-align: center;
 }
 
-.ctas a {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 40px;
-  padding: 0 16px;
-  border-radius: 128px;
-  border: 1px solid transparent;
-  transition: 0.2s;
-  cursor: pointer;
-  width: fit-content;
-  font-weight: 500;
+.exerciseList {
+	display: flex;
+	flex-direction: column;
+	gap: 1.5rem;
 }
 
-a.primary {
-  background: var(--text-primary);
-  color: var(--background);
-  gap: 8px;
+.exerciseCard {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 1.5rem;
+	background-color: #fff;
+	border: 2px solid #e5e7eb;
+	border-radius: 0.5rem;
+	text-decoration: none;
+	color: inherit;
+	transition: all 0.2s ease;
+	cursor: pointer;
 }
 
-a.secondary {
-  border-color: var(--button-secondary-border);
+.exerciseCard:hover {
+	border-color: #3b82f6;
+	box-shadow: 0 4px 12px rgba(59, 130, 246, 0.15);
 }
 
-/* Enable hover only on non-touch devices */
-@media (hover: hover) and (pointer: fine) {
-  a.primary:hover {
-    background: var(--button-primary-hover);
-    border-color: transparent;
-  }
-
-  a.secondary:hover {
-    background: var(--button-secondary-hover);
-    border-color: transparent;
-  }
+.arrow {
+	font-size: 2rem;
+	color: #3b82f6;
+	font-weight: bold;
+	transition: transform 0.2s ease;
 }
 
-@media (max-width: 600px) {
-  .main {
-    padding: 48px 24px;
-  }
-
-  .intro {
-    gap: 16px;
-  }
-
-  .intro h1 {
-    font-size: 32px;
-    line-height: 40px;
-    letter-spacing: -1.92px;
-  }
+.exerciseCard:hover .arrow {
+	transform: translateX(0.25rem);
 }
 
-@media (prefers-color-scheme: dark) {
-  .logo {
-    filter: invert();
-  }
+.exerciseTitle {
+	font-size: 1.5rem;
+	font-weight: 600;
+	color: #1f2937;
+	margin-bottom: 0.5rem;
+}
 
-  .page {
-    --background: #000;
-    --foreground: #000;
+.exerciseDescription {
+	font-size: 1rem;
+	color: #6b7280;
+	margin-bottom: 1rem;
+}
 
-    --text-primary: #ededed;
-    --text-secondary: #999;
+.featureList {
+	font-size: 0.875rem;
+	color: #9ca3af;
+	padding-left: 1.25rem;
+	margin: 0;
+}
 
-    --button-primary-hover: #ccc;
-    --button-secondary-hover: #1a1a1a;
-    --button-secondary-border: #1a1a1a;
-  }
+.footer {
+	margin-top: 3rem;
+	padding-top: 2rem;
+	border-top: 1px solid #e5e7eb;
+}
+
+.footerText {
+	font-size: 0.875rem;
+	color: #9ca3af;
+	text-align: center;
+	margin: 0;
 }
