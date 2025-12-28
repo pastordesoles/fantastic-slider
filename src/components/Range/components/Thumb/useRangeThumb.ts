@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 
 import { useRangeContext } from "../../context/RangeContext";
 
@@ -24,10 +24,15 @@ const useRangeThumb = ({ type, thumbRef }: UseRangeThumbProps) => {
 		? context.handleMinKeyDown
 		: context.handleMaxKeyDown;
 
-	const thumbDistance = Math.abs(context.minPercentage - context.maxPercentage);
-	const isSeparated = thumbDistance < 1;
+	const isSeparated = useMemo(() => {
+		const distance = Math.abs(context.minPercentage - context.maxPercentage);
+		return distance < 1;
+	}, [context.minPercentage, context.maxPercentage]);
 
-	const handleInteractionStart = () => context.setActiveThumb(type);
+	const handleInteractionStart = useCallback(
+		() => context.setActiveThumb(type),
+		[context, type],
+	);
 
 	const label = isMin ? "Minimum value" : "Maximum value";
 

@@ -1,21 +1,13 @@
 import { useRef } from "react";
 
-import type {
-	FixedRangeProps,
-	RangeProps as NormalRangeProps,
-} from "@/types/range";
+import type { RangeComponentProps } from "@/types/range";
+import { isFixedRange } from "@/types/range";
 
 import { useDragHandlers } from "./useDragHandlers";
 import { useKeyboardHandlers } from "./useKeyboardHandlers";
 import { useRangeState } from "./useRangeState";
 
-type RangeProps = NormalRangeProps | FixedRangeProps;
-
-const isFixedRange = (props: RangeProps): props is FixedRangeProps => {
-	return "values" in props;
-};
-
-const useRange = (props: RangeProps) => {
+const useRange = (props: RangeComponentProps) => {
 	const trackRef = useRef<HTMLDivElement>(null);
 	const minThumbRef = useRef<HTMLDivElement>(null);
 	const maxThumbRef = useRef<HTMLDivElement>(null);

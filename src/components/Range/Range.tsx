@@ -2,10 +2,7 @@
 
 import clsx from "clsx";
 
-import type {
-	FixedRangeProps,
-	RangeProps as NormalRangeProps,
-} from "@/types/range";
+import type { RangeComponentProps } from "@/types/range";
 
 import { Label } from "./components/Label/Label";
 import { Thumb } from "./components/Thumb/Thumb";
@@ -13,14 +10,17 @@ import { Track } from "./components/Track/Track";
 import { RangeProvider, useRangeContext } from "./context/RangeContext";
 import styles from "./Range.module.css";
 
-type RangeProps = NormalRangeProps | FixedRangeProps;
-
 const RangeContent = () => {
 	const context = useRangeContext();
-	const isFixed = context.mode === "fixed";
 
 	return (
-		<fieldset className={clsx(styles.range, isFixed && styles["range--fixed"])}>
+		<fieldset
+			className={clsx(
+				styles.range,
+				context.mode === "fixed" && styles["range--fixed"],
+			)}
+			data-mode={context.mode}
+		>
 			<legend className={styles.range__label}>{context.label}</legend>
 
 			<div className={styles.range__values}>
@@ -38,7 +38,7 @@ const RangeContent = () => {
 	);
 };
 
-const Range = (props: RangeProps) => {
+const Range = (props: RangeComponentProps) => {
 	return (
 		<RangeProvider config={props}>
 			<RangeContent />
