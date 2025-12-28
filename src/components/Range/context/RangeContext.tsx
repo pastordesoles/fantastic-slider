@@ -2,14 +2,9 @@
 
 import { createContext, type ReactNode, useContext } from "react";
 
-import type {
-	FixedRangeProps,
-	RangeProps as NormalRangeProps,
-} from "@/types/range";
+import type { RangeComponentProps } from "@/types/range";
 
 import { useRange } from "../hooks/useRange";
-
-type RangeProps = NormalRangeProps | FixedRangeProps;
 
 type RangeContextValue = ReturnType<typeof useRange>;
 
@@ -17,7 +12,7 @@ const RangeContext = createContext<RangeContextValue | null>(null);
 
 interface RangeProviderProps {
 	children: ReactNode;
-	config: RangeProps;
+	config: RangeComponentProps;
 }
 
 const RangeProvider = ({ children, config }: RangeProviderProps) => {
@@ -30,10 +25,10 @@ const RangeProvider = ({ children, config }: RangeProviderProps) => {
 
 const useRangeContext = () => {
 	const context = useContext(RangeContext);
-	if (!context) {
+	if (process.env.NODE_ENV !== "production" && !context) {
 		throw new Error("useRangeContext must be used within a RangeProvider");
 	}
-	return context;
+	return context as RangeContextValue;
 };
 
 export { RangeProvider, useRangeContext };

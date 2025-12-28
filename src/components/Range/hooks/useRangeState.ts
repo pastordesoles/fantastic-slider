@@ -3,23 +3,19 @@ import { useCallback, useState } from "react";
 import type {
 	FixedRangeProps,
 	RangeProps as NormalRangeProps,
+	RangeComponentProps,
 } from "@/types/range";
+import { isFixedRange } from "@/types/range";
 
-type RangeProps = NormalRangeProps | FixedRangeProps;
-
-const isFixedRange = (props: RangeProps): props is FixedRangeProps => {
-	return "values" in props;
-};
-
-const useRangeState = (props: RangeProps) => {
-	const isFixed = isFixedRange(props);
-
+const useRangeState = (props: RangeComponentProps) => {
 	const normalState = useNormalRangeState(
-		isFixed ? { min: 0, max: 100 } : props,
+		isFixedRange(props) ? { min: 0, max: 100 } : props,
 	);
-	const fixedState = useFixedRangeState(isFixed ? props : { values: [] });
+	const fixedState = useFixedRangeState(
+		isFixedRange(props) ? props : { values: [] },
+	);
 
-	return isFixed ? fixedState : normalState;
+	return isFixedRange(props) ? fixedState : normalState;
 };
 
 const useNormalRangeState = (props: NormalRangeProps) => {

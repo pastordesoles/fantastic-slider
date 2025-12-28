@@ -37,3 +37,11 @@ export interface FixedRangeProps {
 	label?: string;
 	currency?: string;
 }
+
+export type RangeComponentProps = RangeProps | FixedRangeProps;
+
+export const isFixedRange = (
+	props: RangeComponentProps,
+): props is FixedRangeProps => {
+	return "values" in props;
+};

@@ -1,20 +1,16 @@
 import { useCallback } from "react";
 
-import type {
-	FixedRangeProps,
-	RangeProps as NormalRangeProps,
-} from "@/types/range";
+import type { RangeComponentProps } from "@/types/range";
 
 import type { useRangeState } from "./useRangeState";
 
 type RangeState = ReturnType<typeof useRangeState>;
-type RangeProps = NormalRangeProps | FixedRangeProps;
 
-const useKeyboardHandlers = (state: RangeState, props: RangeProps) => {
+const useKeyboardHandlers = (state: RangeState, props: RangeComponentProps) => {
 	const step = "step" in props ? (props.step ?? 1) : 1;
 	const min = "min" in props ? props.min : 0;
 	const max = "max" in props ? props.max : 100;
-	const handleMinKeyDown = useCallback(
+	const onMinKeyDown = useCallback(
 		(e: React.KeyboardEvent) => {
 			let handled = true;
 
@@ -53,28 +49,28 @@ const useKeyboardHandlers = (state: RangeState, props: RangeProps) => {
 				}
 			} else {
 				const { minIndex, maxIndex } = state;
-				let newIndex = minIndex;
+				let newIdx = minIndex;
 
 				switch (e.key) {
 					case "ArrowRight":
 					case "ArrowUp":
-						newIndex = minIndex + 1;
+						newIdx = minIndex + 1;
 						break;
 					case "ArrowLeft":
 					case "ArrowDown":
-						newIndex = minIndex - 1;
+						newIdx = minIndex - 1;
 						break;
 					case "Home":
-						newIndex = 0;
+						newIdx = 0;
 						break;
 					case "End":
-						newIndex = maxIndex;
+						newIdx = maxIndex;
 						break;
 					case "PageUp":
-						newIndex = minIndex + 2;
+						newIdx = minIndex + 2;
 						break;
 					case "PageDown":
-						newIndex = minIndex - 2;
+						newIdx = minIndex - 2;
 						break;
 					default:
 						handled = false;
@@ -82,14 +78,14 @@ const useKeyboardHandlers = (state: RangeState, props: RangeProps) => {
 
 				if (handled) {
 					e.preventDefault();
-					state.updateMinIndex(newIndex);
+					state.updateMinIndex(newIdx);
 				}
 			}
 		},
 		[state, step, min],
 	);
 
-	const handleMaxKeyDown = useCallback(
+	const onMaxKeyDown = useCallback(
 		(e: React.KeyboardEvent) => {
 			let handled = true;
 
@@ -128,28 +124,28 @@ const useKeyboardHandlers = (state: RangeState, props: RangeProps) => {
 				}
 			} else {
 				const { minIndex, maxIndex } = state;
-				let newIndex = maxIndex;
+				let newIdx = maxIndex;
 
 				switch (e.key) {
 					case "ArrowRight":
 					case "ArrowUp":
-						newIndex = maxIndex + 1;
+						newIdx = maxIndex + 1;
 						break;
 					case "ArrowLeft":
 					case "ArrowDown":
-						newIndex = maxIndex - 1;
+						newIdx = maxIndex - 1;
 						break;
 					case "Home":
-						newIndex = minIndex;
+						newIdx = minIndex;
 						break;
 					case "End":
-						newIndex = Number.MAX_SAFE_INTEGER;
+						newIdx = Number.MAX_SAFE_INTEGER;
 						break;
 					case "PageUp":
-						newIndex = maxIndex + 2;
+						newIdx = maxIndex + 2;
 						break;
 					case "PageDown":
-						newIndex = maxIndex - 2;
+						newIdx = maxIndex - 2;
 						break;
 					default:
 						handled = false;
@@ -157,7 +153,7 @@ const useKeyboardHandlers = (state: RangeState, props: RangeProps) => {
 
 				if (handled) {
 					e.preventDefault();
-					state.updateMaxIndex(newIndex);
+					state.updateMaxIndex(newIdx);
 				}
 			}
 		},
@@ -165,8 +161,8 @@ const useKeyboardHandlers = (state: RangeState, props: RangeProps) => {
 	);
 
 	return {
-		handleMinKeyDown,
-		handleMaxKeyDown,
+		handleMinKeyDown: onMinKeyDown,
+		handleMaxKeyDown: onMaxKeyDown,
 	};
 };
 
